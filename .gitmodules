@@ -1,0 +1,9 @@
+[submodule "JUCE"]
+	path = modules/JUCE
+	url = https://github.com/juce-framework/JUCE.git
+[submodule "viatordsp"]
+	path = modules/viatordsp
+	url = https://github.com/landonviator/viatordsp.git
+[submodule "curl"]
+	path = modules/curl
+	url = https://github.com/curl/curl.git
