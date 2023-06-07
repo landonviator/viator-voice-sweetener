@@ -45,6 +45,12 @@ jobs:
         with:
           node-version: "14"
 
+      - name: Cache Projucer build
+        uses: actions/cache@v2
+        with:
+          path: modules/JUCE/extras/Projucer/Builds/MacOSX/build
+          key: ${{ runner.os }}-projucer-${{ hashFiles('modules/JUCE/extras/Projucer/Builds/MacOSX/Projucer.xcodeproj') }}
+
       - name: Build Projucer
         run: |
           cd modules/JUCE/extras/Projucer/Builds/MacOSX
