@@ -5,6 +5,32 @@
               companyName="Viator DSP" pluginName="Viator Voice Sweetener">
   <MAINGROUP id="Y1N3I7" name="viator-voice-sweetener">
     <GROUP id="{F5D35C09-31D3-5C1B-A601-2AF40BCABE85}" name="Source">
+      <GROUP id="{CD205FA8-645B-5176-901D-9BECACD2EA9F}" name="Assets">
+        <FILE id="QIsYFl" name="landon.png" compile="0" resource="1" file="Source/Assets/landon.png"/>
+      </GROUP>
+      <GROUP id="{2932E0CF-4D41-C373-5E3B-A8DEA7F23E43}" name="components">
+        <FILE id="Kiw5Aa" name="Header.cpp" compile="1" resource="0" file="Source/components/Header.cpp"/>
+        <FILE id="sTxNSk" name="Header.h" compile="0" resource="0" file="Source/components/Header.h"/>
+        <FILE id="iY7Y8L" name="NavBar.cpp" compile="1" resource="0" file="Source/components/NavBar.cpp"/>
+        <FILE id="X9MEjm" name="NavBar.h" compile="0" resource="0" file="Source/components/NavBar.h"/>
+        <FILE id="SY6Kwb" name="PresetBrowser.cpp" compile="1" resource="0"
+              file="Source/components/PresetBrowser.cpp"/>
+        <FILE id="ZhhIGs" name="PresetBrowser.h" compile="0" resource="0" file="Source/components/PresetBrowser.h"/>
+        <FILE id="EZIJ8g" name="SettingsPage.cpp" compile="1" resource="0"
+              file="Source/components/SettingsPage.cpp"/>
+        <FILE id="OVCj7Y" name="SettingsPage.h" compile="0" resource="0" file="Source/components/SettingsPage.h"/>
+      </GROUP>
+      <GROUP id="{1CEF58B3-54AE-6B0D-98FF-EB2988AAE643}" name="Globals">
+        <FILE id="Bl1WXb" name="Globals.cpp" compile="1" resource="0" file="Source/Globals/Globals.cpp"/>
+        <FILE id="UxRDug" name="Globals.h" compile="0" resource="0" file="Source/Globals/Globals.h"/>
+        <FILE id="b6Uw9C" name="Parameters.cpp" compile="1" resource="0" file="Source/Globals/Parameters.cpp"/>
+        <FILE id="PejIoz" name="Parameters.h" compile="0" resource="0" file="Source/Globals/Parameters.h"/>
+      </GROUP>
+      <FILE id="uu7aOS" name="includes.h" compile="0" resource="0" file="Source/includes.h"/>
+      <GROUP id="{72CA1B8A-8326-2B22-9C9E-BFB85C34194A}" name="LAF">
+        <FILE id="e44fZd" name="Colors.cpp" compile="1" resource="0" file="Source/LAF/Colors.cpp"/>
+        <FILE id="ENLfhX" name="Colors.h" compile="0" resource="0" file="Source/LAF/Colors.h"/>
+      </GROUP>
       <FILE id="NfqfI2" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="lUaGKe" name="PluginProcessor.h" compile="0" resource="0"

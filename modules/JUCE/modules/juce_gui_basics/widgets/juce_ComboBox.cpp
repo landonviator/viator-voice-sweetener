@@ -261,16 +261,13 @@ void ComboBox::setSelectedId (const int newItemId, const NotificationType notifi
     auto* item = getItemForId (newItemId);
     auto newItemText = item != nullptr ? item->text : String();
 
-    if (lastCurrentId != newItemId || label->getText() != newItemText)
-    {
-        label->setText (newItemText, dontSendNotification);
-        lastCurrentId = newItemId;
-        currentId = newItemId;
+    label->setText (newItemText, dontSendNotification);
+    lastCurrentId = newItemId;
+    currentId = newItemId;
 
-        repaint();  // for the benefit of the 'none selected' text
+    repaint();  // for the benefit of the 'none selected' text
 
-        sendChange (notification);
-    }
+    sendChange (notification);
 }
 
 bool ComboBox::selectIfEnabled (const int index)

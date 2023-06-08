@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
@@ -20,12 +12,41 @@ ViatorvoicesweetenerAudioProcessor::ViatorvoicesweetenerAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        )
+, _treeState(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
+    // sliders
+    for (int i = 0; i < _parameterMap.getSliderParams().size(); i++)
+    {
+        _treeState.addParameterListener(_parameterMap.getSliderParams()[i].paramID, this);
+    }
+    
+    // buttons
+    for (int i = 0; i < _parameterMap.getButtonParams().size(); i++)
+    {
+        _treeState.addParameterListener(_parameterMap.getButtonParams()[i]._id, this);
+    }
+    
+    // init var states
+    variableTree.setProperty("width", 0, nullptr);
+    variableTree.setProperty("heigt", 0, nullptr);
+    variableTree.setProperty("colorMenu", 1, nullptr);
+    variableTree.setProperty("tooltipState", 1, nullptr);
 }
 
 ViatorvoicesweetenerAudioProcessor::~ViatorvoicesweetenerAudioProcessor()
 {
+    // sliders
+    for (int i = 0; i < _parameterMap.getSliderParams().size(); i++)
+    {
+        _treeState.removeParameterListener(_parameterMap.getSliderParams()[i].paramID, this);
+    }
+    
+    // buttons
+    for (int i = 0; i < _parameterMap.getButtonParams().size(); i++)
+    {
+        _treeState.removeParameterListener(_parameterMap.getButtonParams()[i]._id, this);
+    }
 }
 
 //==============================================================================
@@ -90,11 +111,82 @@ void ViatorvoicesweetenerAudioProcessor::changeProgramName (int index, const juc
 {
 }
 
+juce::AudioProcessorValueTreeState::ParameterLayout ViatorvoicesweetenerAudioProcessor::createParameterLayout()
+{
+    std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
+    
+    // sliders
+    for (int i = 0; i < _parameterMap.getSliderParams().size(); i++)
+    {
+        auto param = _parameterMap.getSliderParams()[i];
+        
+        if (param.isInt == ViatorParameters::SliderParameterData::NumericType::kInt || param.isSkew == ViatorParameters::SliderParameterData::SkewType::kSkew)
+        {
+            auto range = juce::NormalisableRange<float>(param.min, param.max);
+            
+            if (param.isSkew == ViatorParameters::SliderParameterData::SkewType::kSkew)
+            {
+                range.setSkewForCentre(param.center);
+            }
+            
+            params.push_back (std::make_unique<juce::AudioProcessorValueTreeState::Parameter>(juce::ParameterID { param.paramID, 1 }, param.name, param.name, range, param.initial, valueToTextFunction, textToValueFunction));
+        }
+        
+        else
+        {
+            params.push_back (std::make_unique<juce::AudioParameterFloat>(juce::ParameterID { param.paramID, 1 }, param.name, param.min, param.max, param.initial));
+        }
+    }
+    
+    // buttons
+    for (int i = 0; i < _parameterMap.getButtonParams().size(); i++)
+    {
+        auto param = _parameterMap.getButtonParams()[i];
+        params.push_back (std::make_unique<juce::AudioParameterBool>(juce::ParameterID { param._id, 1 }, param._name, false));
+    }
+        
+    return { params.begin(), params.end() };
+}
+
+void ViatorvoicesweetenerAudioProcessor::parameterChanged(const juce::String &parameterID, float newValue)
+
+{
+    updateParameters();
+}
+
+void ViatorvoicesweetenerAudioProcessor::updateParameters()
+{
+    // params
+    auto volume = _treeState.getRawParameterValue(ViatorParameters::outputID)->load();
+    auto reduction = _treeState.getRawParameterValue(ViatorParameters::sweetenerID)->load();
+    
+    // update
+    auto gainCompensation = reduction * 0.166;
+    auto reductionScaled = juce::jmap(reduction, 0.0f, 100.0f, 1.0f, 0.5f);
+    _expanderModule.setRatio(reductionScaled);
+    _expanderModule.setThreshold(0.0);
+    _expanderModule.setAttack(50.0);
+    _expanderModule.setRelease(150.0);
+    _compensationModule.setGainDecibels(gainCompensation);
+    _volumeModule.setGainDecibels(volume);
+    
+}
+
 //==============================================================================
 void ViatorvoicesweetenerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    _spec.sampleRate = sampleRate;
+    _spec.maximumBlockSize = samplesPerBlock;
+    _spec.numChannels = getTotalNumInputChannels();
+    
+    _expanderModule.prepare(_spec);
+    
+    _compensationModule.prepare(_spec);
+    _compensationModule.setRampDurationSeconds(0.02);
+    _volumeModule.prepare(_spec);
+    _volumeModule.setRampDurationSeconds(0.02);
+    
+    updateParameters();
 }
 
 void ViatorvoicesweetenerAudioProcessor::releaseResources()
@@ -106,56 +198,18 @@ void ViatorvoicesweetenerAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool ViatorvoicesweetenerAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
-    juce::ignoreUnused (layouts);
-    return true;
-  #else
-    // This is the place where you check if the layout is supported.
-    // In this template code we only support mono or stereo.
-    // Some plugin hosts, such as certain GarageBand versions, will only
-    // load plugins that support stereo bus layouts.
-    if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
-        return false;
-
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
-    if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
-        return false;
-   #endif
-
-    return true;
-  #endif
+    return layouts.getMainOutputChannelSet() == juce::AudioChannelSet::mono()
+        || layouts.getMainOutputChannelSet() == juce::AudioChannelSet::stereo();
 }
 #endif
 
 void ViatorvoicesweetenerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
-    }
+    juce::dsp::AudioBlock<float> block {buffer};
+    
+    _expanderModule.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _compensationModule.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _volumeModule.process(juce::dsp::ProcessContextReplacing<float>(block));
 }
 
 //==============================================================================
@@ -167,20 +221,28 @@ bool ViatorvoicesweetenerAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* ViatorvoicesweetenerAudioProcessor::createEditor()
 {
     return new ViatorvoicesweetenerAudioProcessorEditor (*this);
+    //return new juce::GenericAudioProcessorEditor (*this);
 }
 
 //==============================================================================
 void ViatorvoicesweetenerAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    _treeState.state.appendChild(variableTree, nullptr);
+    juce::MemoryOutputStream stream(destData, false);
+    _treeState.state.writeToStream (stream);
 }
 
 void ViatorvoicesweetenerAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    auto tree = juce::ValueTree::readFromData (data, size_t(sizeInBytes));
+    variableTree = tree.getChildWithName("Variables");
+    
+    if (tree.isValid())
+    {
+        _treeState.state = tree;
+        _width = variableTree.getProperty("width");
+        _height = variableTree.getProperty("height");
+    }
 }
 
 //==============================================================================
