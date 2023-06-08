@@ -55,11 +55,11 @@ jobs:
         run: |
           cd modules/JUCE/extras/Projucer/Builds/MacOSX
           xcodebuild -project Projucer.xcodeproj -scheme "Projucer - App" -configuration Release
-          cp -R modules/JUCE/extras/Projucer/Builds/MacOSX/build/Release/
+          cp -R build/Release/Projucer.app modules/JUCE/extras/Projucer/Builds/MacOSX/builds/
 
       - name: Save Projucer Project
         run: |
-          modules/JUCE/extras/Projucer/Builds/MacOSX/build/Release/Projucer.app/Contents/MacOS/Projucer --resave viator-voice-sweetener/"viator-voice-sweetener.jucer"
+          modules/JUCE/extras/Projucer/Builds/MacOSX/builds/Projucer.app/Contents/MacOS/Projucer --resave viator-voice-sweetener/"viator-voice-sweetener.jucer"
 
       - name: Download Pluginval
         run: |
