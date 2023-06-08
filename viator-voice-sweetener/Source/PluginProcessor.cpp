@@ -157,19 +157,24 @@ void ViatorvoicesweetenerAudioProcessor::parameterChanged(const juce::String &pa
 void ViatorvoicesweetenerAudioProcessor::updateParameters()
 {
     // params
+    auto gain = _treeState.getRawParameterValue(ViatorParameters::inputID)->load();
     auto volume = _treeState.getRawParameterValue(ViatorParameters::outputID)->load();
-    auto reduction = _treeState.getRawParameterValue(ViatorParameters::sweetenerID)->load();
+    auto sweetener = _treeState.getRawParameterValue(ViatorParameters::sweetenerID)->load();
     
     // update
-    auto gainCompensation = reduction * 0.166;
-    auto reductionScaled = juce::jmap(reduction, 0.0f, 100.0f, 1.0f, 0.5f);
-    _expanderModule.setRatio(reductionScaled);
-    _expanderModule.setThreshold(0.0);
-    _expanderModule.setAttack(50.0);
-    _expanderModule.setRelease(150.0);
-    _compensationModule.setGainDecibels(gainCompensation);
+    _gainModule.setGainDecibels(gain);
     _volumeModule.setGainDecibels(volume);
     
+    auto hpCutoffScaled = juce::jmap(sweetener, 0.0f, 100.0f, 20.0f, 80.0f);
+    auto lowGainScaled = juce::jmap(sweetener, 0.0f, 100.0f, 0.0f, 9.0f);
+    auto midGainScaled = juce::jmap(sweetener, 0.0f, 100.0f, 0.0f, -9.0f);
+    auto highGainScaled = juce::jmap(sweetener, 0.0f, 100.0f, 0.0f, 9.0f);
+    auto lpCutoffScaled = juce::jmap(sweetener, 0.0f, 100.0f, 20000.0f, 10000.0f);
+    _hpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kCutoff, hpCutoffScaled);
+    _lowFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kGain, lowGainScaled);
+    _midFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kGain, midGainScaled);
+    _highFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kGain, highGainScaled);
+    _lpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kCutoff, lpCutoffScaled);
 }
 
 //==============================================================================
@@ -179,10 +184,38 @@ void ViatorvoicesweetenerAudioProcessor::prepareToPlay (double sampleRate, int s
     _spec.maximumBlockSize = samplesPerBlock;
     _spec.numChannels = getTotalNumInputChannels();
     
-    _expanderModule.prepare(_spec);
+    _hpFilter.prepare(_spec);
+    _hpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kType, viator_dsp::SVFilter<float>::kHighPass);
+    _hpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQType, viator_dsp::SVFilter<float>::QType::kProportional);
+    _hpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQ, 0.9f);
+    _hpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kGain, 0.0f);
     
-    _compensationModule.prepare(_spec);
-    _compensationModule.setRampDurationSeconds(0.02);
+    _lowFilter.prepare(_spec);
+    _lowFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kType, viator_dsp::SVFilter<float>::kLowShelf);
+    _lowFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kCutoff, 300.0f);
+    _lowFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQType, viator_dsp::SVFilter<float>::QType::kParametric);
+    _lowFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQ, 0.3f);
+    
+    _midFilter.prepare(_spec);
+    _midFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kType, viator_dsp::SVFilter<float>::kBandShelf);
+    _midFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kCutoff, 500.0f);
+    _midFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQType, viator_dsp::SVFilter<float>::QType::kParametric);
+    _midFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQ, 0.7f);
+    
+    _highFilter.prepare(_spec);
+    _highFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kType, viator_dsp::SVFilter<float>::kHighShelf);
+    _highFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kCutoff, 5000.0f);
+    _highFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQType, viator_dsp::SVFilter<float>::QType::kParametric);
+    _highFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQ, 0.3f);
+    
+    _lpFilter.prepare(_spec);
+    _lpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kType, viator_dsp::SVFilter<float>::kLowPass);
+    _lpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQType, viator_dsp::SVFilter<float>::QType::kProportional);
+    _lpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kQ, 0.9f);
+    _lpFilter.setParameter(viator_dsp::SVFilter<float>::ParameterId::kGain, 0.0f);
+    
+    _gainModule.prepare(_spec);
+    _gainModule.setRampDurationSeconds(0.02);
     _volumeModule.prepare(_spec);
     _volumeModule.setRampDurationSeconds(0.02);
     
@@ -207,8 +240,17 @@ void ViatorvoicesweetenerAudioProcessor::processBlock (juce::AudioBuffer<float>&
 {
     juce::dsp::AudioBlock<float> block {buffer};
     
-    _expanderModule.process(juce::dsp::ProcessContextReplacing<float>(block));
-    _compensationModule.process(juce::dsp::ProcessContextReplacing<float>(block));
+    // gain
+    _gainModule.process(juce::dsp::ProcessContextReplacing<float>(block));
+    
+    // filters
+    _hpFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _lowFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _midFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _highFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+    _lpFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+    
+    // volume
     _volumeModule.process(juce::dsp::ProcessContextReplacing<float>(block));
 }
 

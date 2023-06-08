@@ -26,12 +26,6 @@ public:
             }
         }
         
-        if (mType == kHighPass && mCutoff == 20.0) return;
-        if (mType == kLowPass && mCutoff == 20000.0) return;
-        
-        
-        if (mGlobalBypass) return;
-        
         auto&& inBlock  = context.getInputBlock();
         auto&& outBlock = context.getOutputBlock();
 

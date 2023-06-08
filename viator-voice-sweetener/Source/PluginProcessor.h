@@ -68,8 +68,12 @@ public:
 private:
     juce::dsp::ProcessSpec _spec;
     
-    viator_dsp::Expander<float> _expanderModule;
-    juce::dsp::Gain<float> _compensationModule;
+    viator_dsp::SVFilter<float> _hpFilter;
+    viator_dsp::SVFilter<float> _lowFilter;
+    viator_dsp::SVFilter<float> _midFilter;
+    viator_dsp::SVFilter<float> _highFilter;
+    viator_dsp::SVFilter<float> _lpFilter;
+    juce::dsp::Gain<float> _gainModule;
     juce::dsp::Gain<float> _volumeModule;
     
 private:

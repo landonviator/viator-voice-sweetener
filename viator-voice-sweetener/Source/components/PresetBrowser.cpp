@@ -123,6 +123,7 @@ void PresetBrowser::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged)
         auto currentIndex = _presetMenu.getSelectedItemIndex();
         audioProcessor.variableTree.setProperty("presetMenu", currentIndex, nullptr);
     }
+    
     else
     {
         // Reset the flag for subsequent user-initiated changes
