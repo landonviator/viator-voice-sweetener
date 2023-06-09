@@ -34,7 +34,7 @@ jobs:
 
       - name: Save Projucer Project
         run: |
-          modules/JUCE/extras/Projucer/Builds/VisualStudio2019/x64/Release/Projucer.exe --resave viator-voice-sweetener/"viator-voice-sweetener.jucer"
+          modules\JUCE\extras\Projucer\Builds\VisualStudio2019\x64\Release\Projucer.exe --resave viator-voice-sweetener\"viator-voice-sweetener.jucer"
 
       - name: Download Pluginval
         run: |
