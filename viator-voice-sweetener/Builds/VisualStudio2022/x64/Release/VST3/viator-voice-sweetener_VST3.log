@@ -1,5 +1,4 @@
-﻿  include_juce_audio_plugin_client_VST3.cpp
-     Creating library C:\Users\lando\Documents\GitHub\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.lib and object C:\Users\lando\Documents\GitHub\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.exp
+﻿     Creating library C:\Users\lando\Documents\GitHub\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.lib and object C:\Users\lando\Documents\GitHub\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.exp
   Generating code
   Finished generating code
   viator-voice-sweetener_VST3.vcxproj -> C:\Users\lando\Documents\GitHub\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.vst3
