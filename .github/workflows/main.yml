@@ -36,28 +36,24 @@ jobs:
         run: |
           modules\JUCE\extras\Projucer\Builds\VisualStudio2019\x64\Release\App\Projucer.exe --resave viator-voice-sweetener\"viator-voice-sweetener.jucer"
 
-      #- name: Download Pluginval
-      #run: |
-      #mkdir Pluginval
-      #cd Pluginval
-      #curl -L "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_Windows.zip" -o pluginval.zip
-      #Expand-Archive -Path pluginval.zip -DestinationPath . -Force
+      - name: Download Pluginval
+        run: |
+          mkdir Pluginval
+          cd Pluginval
+          curl -L "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_Windows.zip" -o pluginval.zip
+          Expand-Archive -Path pluginval.zip -DestinationPath . -Force
 
-      #- name: Build Plugin Windows VST3
-      #run: |
-      #cd viator-voice-sweetener/Builds/VisualStudio2019
-      #msbuild "viator-voice-sweetener.vcxproj" /p:Configuration=Release /p:Platform=x64
+      - name: Build Plugin Windows VST3
+        run: |
+          cd viator-voice-sweetener/Builds/VisualStudio2019
+          msbuild "viator-voice-sweetener.vcxproj" /p:Configuration=Release /p:Platform=x64
 
-      #- name: Validate Windows VST3
-      #run: |
-      #Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate ~/AppData/Roaming/VST3/viator-voice-sweetener.vst3 || exit 1
+      - name: Validate Windows VST3
+        run: |
+          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate ~/AppData/Roaming/VST3/viator-voice-sweetener.vst3 || exit 1
 
-      #- name: Sign Windows VST3
-      #run: |
-      # Add the necessary commands to sign the VST3 plugin
-
-      #- name: Upload Windows VST3
-      #uses: actions/upload-artifact@v3
-      #with:
-      #name: Windows-Hermes-Voice-EQ-VST3-Artifact
-      #path: ~/AppData/Roaming/VST3/
+      - name: Upload Windows VST3
+        uses: actions/upload-artifact@v3
+        with:
+          name: Windows-Hermes-Voice-EQ-VST3-Artifact
+          path: ~/AppData/Roaming/VST3/
