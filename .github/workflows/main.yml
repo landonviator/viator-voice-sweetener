@@ -46,7 +46,7 @@ jobs:
       - name: Build Plugin Windows VST3
         run: |
           cd viator-voice-sweetener/Builds/VisualStudio2019
-          msbuild "viator-voice-sweetener.vcxproj" /p:Configuration=Release /p:Platform=x64
+          msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
 
       - name: Validate Windows VST3
         run: |
