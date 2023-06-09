@@ -26,14 +26,14 @@ jobs:
         with:
           vs-version: "latest"
 
-      - name: Build Projucer
-        run: |
-          cd modules/JUCE/extras/Projucer/Builds/VisualStudio2019
-          msbuild Projucer.sln /p:Configuration=Release /p:Platform=x64
+      # - name: Build Projucer
+      #  run: |
+      #    cd modules/JUCE/extras/Projucer/Builds/VisualStudio2019
+      #    msbuild Projucer.sln /p:Configuration=Release /p:Platform=x64
 
-      - name: Save Projucer Project
-        run: |
-          modules\JUCE\extras\Projucer\Builds\VisualStudio2019\x64\Release\App\Projucer.exe --resave viator-voice-sweetener\"viator-voice-sweetener.jucer"
+      # - name: Save Projucer Project
+      #   run: |
+      #     modules\JUCE\extras\Projucer\Builds\VisualStudio2019\x64\Release\App\Projucer.exe --resave viator-voice-sweetener\"viator-voice-sweetener.jucer"
 
       - name: Download Pluginval
         run: |
