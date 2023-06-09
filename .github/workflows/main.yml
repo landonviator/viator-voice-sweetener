@@ -46,7 +46,8 @@ jobs:
         run: |
           cd viator-voice-sweetener/Builds/VisualStudio2019
           msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
-          copy "x86/Release/VST3/viator-voice-sweetener.vst3" "C:\Program Files (x86)\Common Files\VST3\"
+          echo Current Directory: %CD%
+        # copy "x86/Release/VST3/viator-voice-sweetener.vst3" "C:\Program Files (x86)\Common Files\VST3\"
 
       - name: Validate Windows VST3
         run: |
