@@ -46,14 +46,15 @@ jobs:
         run: |
           cd viator-voice-sweetener/Builds/VisualStudio2019
           msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
-          copy "x64/Release/VST3/viator-voice-sweetener.vst3" "VST3/"
+          cd "x64/Release/VST3/"
+          ls
 
       - name: Validate Windows VST3
         run: |
-          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate "VST3/viator-voice-sweetener.vst3" || exit 1
+          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate "x64/Release/VST3/viator-voice-sweetener.vst3" || exit 1
 
       - name: Upload Windows VST3
         uses: actions/upload-artifact@v3
         with:
           name: Windows-Hermes-Voice-EQ-VST3-Artifact
-          path: "VST3/"
+          path: "x64/Release/VST3/"
