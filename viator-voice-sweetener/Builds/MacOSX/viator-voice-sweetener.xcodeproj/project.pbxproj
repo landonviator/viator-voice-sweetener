@@ -115,7 +115,6 @@
 		67866B05B7F6C2C9A41DDC07 /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
 		6A3AC15ACC5288AA84D8FDAF /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
 		6C7BEC23845F781D6E6D53C5 /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
-		741C0EA2C4E9D57F7BDA14C8 /* viator_modules */ /* viator_modules */ = {isa = PBXFileReference; lastKnownFileType = folder; name = viator_modules; path = ../../../modules/viatordsp/viator_modules; sourceTree = SOURCE_ROOT; };
 		7C9F2B23EF4FB5594436467D /* RecentFilesMenuTemplate.nib */ /* RecentFilesMenuTemplate.nib */ = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = SOURCE_ROOT; };
 		850B9DD6CB7F3D55B8365C32 /* Colors.cpp */ /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Colors.cpp; path = ../../Source/LAF/Colors.cpp; sourceTree = SOURCE_ROOT; };
 		886DB261FDFC27C572A60724 /* PluginEditor.h */ /* PluginEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginEditor.h; path = ../../Source/PluginEditor.h; sourceTree = SOURCE_ROOT; };
@@ -141,6 +140,7 @@
 		C376E3D9FD60711B1838919A /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		CB507979299CB339F98BF58A /* PluginProcessor.cpp */ /* PluginProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginProcessor.cpp; path = ../../Source/PluginProcessor.cpp; sourceTree = SOURCE_ROOT; };
 		CEB8D3636B9BFB988F689E92 /* NavBar.cpp */ /* NavBar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NavBar.cpp; path = ../../Source/components/NavBar.cpp; sourceTree = SOURCE_ROOT; };
+		D08BE7696A4A37E21CC5DF10 /* viator_modules */ /* viator_modules */ = {isa = PBXFileReference; lastKnownFileType = folder; name = viator_modules; path = ../../JuceLibraryCode/modules/viator_modules; sourceTree = SOURCE_ROOT; };
 		D153A3DB9788B1BFEDB130CC /* Colors.h */ /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Colors.h; path = ../../Source/LAF/Colors.h; sourceTree = SOURCE_ROOT; };
 		D78E0E72B1BD7DBD15C4F7B3 /* juce_audio_utils */ /* juce_audio_utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_utils; path = ../../../modules/JUCE/modules/juce_audio_utils; sourceTree = SOURCE_ROOT; };
 		DA1951098FE6F35458A2D46C /* landon.png */ /* landon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = landon.png; path = ../../Source/Assets/landon.png; sourceTree = SOURCE_ROOT; };
@@ -260,7 +260,7 @@
 				2693DAAE68B12F1C8426C88E,
 				E0C3A45B965D2A6B0EC20A0B,
 				E5645854A0F85E3C28655946,
-				741C0EA2C4E9D57F7BDA14C8,
+				D08BE7696A4A37E21CC5DF10,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -823,13 +823,13 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -945,7 +945,7 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
@@ -955,7 +955,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -1108,14 +1108,14 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -1220,14 +1220,14 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -1335,7 +1335,7 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
@@ -1345,7 +1345,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
@@ -1451,7 +1451,7 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
@@ -1459,7 +1459,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -1566,7 +1566,7 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
@@ -1575,7 +1575,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;
 				PRODUCT_NAME = "viator-voice-sweetener";
@@ -1738,7 +1738,7 @@
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../modules/JUCE/modules",
-					"$(SRCROOT)/../../../modules/viatordsp",
+					"$(SRCROOT)/../../JuceLibraryCode/modules",
 					"$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU",
 					"$(inherited)",
 				);
@@ -1747,7 +1747,7 @@
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../../modules/viatordsp $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../modules/JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../modules/JUCE/modules $(SRCROOT)/../../JuceLibraryCode/modules $(SRCROOT)/../../../modules/JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lviator-voice-sweetener -weak_framework Metal -weak_framework MetalKit";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ViatorDSP.viatorvoicesweetener;

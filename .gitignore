@@ -27,6 +27,9 @@
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
+
+*.db
+*.opendb
+*.ipch
