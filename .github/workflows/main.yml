@@ -51,6 +51,17 @@ jobs:
         run: |
           Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.vst3 || exit 1
 
+      - name: Delete useless Windows files
+        run: |
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\resources.res
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-v.4FC9B7FB.tlog
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.exp
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.iobj
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.pdb
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.vst3.recipe
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener_VST3.log
+          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener_VST3.vcxproj.FileListAbsolute.txt
+
       - name: Upload Windows VST3
         uses: actions/upload-artifact@v3
         with:
