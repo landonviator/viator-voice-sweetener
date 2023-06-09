@@ -12,91 +12,52 @@ jobs:
   build:
     runs-on: macos-latest
 
+  build-windows:
+    runs-on: windows-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           submodules: recursive
 
-      - name: Install the Apple certificate and provisioning profile
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-
-          # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
-
-          # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-
-      - name: Set up Xcode
-        uses: actions/setup-node@v2
+      - name: Set up Visual Studio
+        uses: actions/setup-msbuild@v1
         with:
-          node-version: "14"
+          vs-version: "latest"
 
       - name: Build Projucer
         run: |
-          cd modules/JUCE/extras/Projucer/Builds/MacOSX
-          xcodebuild -project Projucer.xcodeproj -scheme "Projucer - App" -configuration Release
-          cp -R build/Release/Projucer.app builds/
+          cd modules/JUCE/extras/Projucer/Builds/VisualStudio2019
+          msbuild Projucer.sln /p:Configuration=Release /p:Platform=x64
+          copy "x64\Release\Projucer.exe" builds\
 
       - name: Save Projucer Project
         run: |
-          modules/JUCE/extras/Projucer/Builds/MacOSX/build/Release/Projucer.app/Contents/MacOS/Projucer --resave viator-voice-sweetener/"viator-voice-sweetener.jucer"
+          modules/JUCE/extras/Projucer/Builds/VisualStudio2019/x64/Release/Projucer.exe --resave viator-voice-sweetener/"viator-voice-sweetener.jucer"
 
       - name: Download Pluginval
         run: |
           mkdir Pluginval
           cd Pluginval
-          curl -L "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip" -o pluginval.zip
-          unzip pluginval
+          curl -L "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_Windows.zip" -o pluginval.zip
+          Expand-Archive -Path pluginval.zip -DestinationPath . -Force
 
-      - name: Build Plugin Mac AU & VST3
+      - name: Build Plugin Windows VST3
         run: |
-          cd viator-voice-sweetener/Builds/MacOSX
-          xcodebuild -project "viator-voice-sweetener.xcodeproj" -scheme "viator-voice-sweetener - All" -configuration Release
+          cd viator-voice-sweetener/Builds/VisualStudio2019
+          msbuild "viator-voice-sweetener.vcxproj" /p:Configuration=Release /p:Platform=x64
 
-      - name: Validate Mac AU
+      - name: Validate Windows VST3
         run: |
-          sudo killall -9 AudioComponentRegistrar
-          sudo killall -9 coreaudiod
-          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetener.component || exit 1
+          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate ~/AppData/Roaming/VST3/viator-voice-sweetener.vst3 || exit 1
 
-      - name: Validate Mac VST3
+      - name: Sign Windows VST3
         run: |
-          sudo killall -9 AudioComponentRegistrar
-          sudo killall -9 coreaudiod
-          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetener.vst3 || exit 1
+          # Add the necessary commands to sign the VST3 plugin
 
-      - name: Delete .a files
-        run: rm -R viator-voice-sweetener/Builds/MacOSX/build/Release/libviator-voice-sweetener.a
-
-      - name: Sign Mac Builds
-        env:
-          HASH_OF_DEVELOPER_ID_APPLICATION: ${{ secrets.HASH_OF_DEVELOPER_ID_APPLICATION }}
-        run: |
-          codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetener.component
-          codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetener.vst3
-
-      - name: Upload Mac AU
+      - name: Upload Windows VST3
         uses: actions/upload-artifact@v3
         with:
-          name: Mac-Hermes-Voice-EQ-AU-Artifact
-          path: ~/Library/Audio/Plug-Ins/Components/
-
-      - name: Upload Mac VST3
-        uses: actions/upload-artifact@v3
-        with:
-          name: Mac-Hermes-Voice-EQ-VST3-Artifact
-          path: ~/Library/Audio/Plug-Ins/VST3/
+          name: Windows-Hermes-Voice-EQ-VST3-Artifact
+          path: ~/AppData/Roaming/VST3/
