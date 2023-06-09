@@ -41,14 +41,11 @@ jobs:
           cd Pluginval
           curl -L "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_Windows.zip" -o pluginval.zip
           Expand-Archive -Path pluginval.zip -DestinationPath . -Force
-          cd ../viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3
 
       # - name: Build Plugin Windows VST3
       #   run: |
       #     cd viator-voice-sweetener/Builds/VisualStudio2022
       #     msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
-      #     cd viator-voice-sweetener\viator-voice-sweetener\viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\
-      #     ls
 
       - name: Validate Windows VST3
         run: |
