@@ -3,7 +3,7 @@
 namespace ViatorParameters
 {
     const juce::String sweetenerID = "sweetness";
-    const juce::String sweetenerName = "Sweetness";
+    const juce::String sweetenerName = "Sweetify";
 
     const juce::String inputID = "input";
     const juce::String inputName = "inputName";
