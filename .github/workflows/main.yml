@@ -22,7 +22,7 @@ jobs:
           submodules: recursive
 
       - name: Set up Visual Studio
-        uses: actions/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v1.1
         with:
           vs-version: "latest"
 
