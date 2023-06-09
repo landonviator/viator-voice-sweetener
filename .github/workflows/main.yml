@@ -47,11 +47,11 @@ jobs:
           cd viator-voice-sweetener/Builds/VisualStudio2019
           msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
           echo "Current Directory: $PWD"
-        # copy "x86/Release/VST3/viator-voice-sweetener.vst3" "C:\Program Files (x86)\Common Files\VST3\"
+        #  copy "x86/Release/VST3/viator-voice-sweetener.vst3" "C:\Program Files (x86)\Common Files\VST3\"
 
       - name: Validate Windows VST3
         run: |
-          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate "C:\Program Files (x86)\Common Files\VST3\viator-voice-sweetener.vst3" || exit 1
+          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate "x86/Release/VST3/viator-voice-sweetener.vst3" || exit 1
 
       - name: Upload Windows VST3
         uses: actions/upload-artifact@v3
