@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: macos-latest
+  #build:
+  #runs-on: macos-latest
 
   build-windows:
     runs-on: windows-latest
