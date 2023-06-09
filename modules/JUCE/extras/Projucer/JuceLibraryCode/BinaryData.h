@@ -9,94 +9,94 @@
 namespace BinaryData
 {
     extern const char*   JuceLV2Defines_h_in;
-    const int            JuceLV2Defines_h_inSize = 91;
+    const int            JuceLV2Defines_h_inSize = 96;
 
     extern const char*   LaunchScreen_storyboard;
-    const int            LaunchScreen_storyboardSize = 1042;
+    const int            LaunchScreen_storyboardSize = 1058;
 
     extern const char*   PIPAudioProcessor_cpp_in;
-    const int            PIPAudioProcessor_cpp_inSize = 483;
+    const int            PIPAudioProcessor_cpp_inSize = 499;
 
     extern const char*   PIPAudioProcessorWithARA_cpp_in;
-    const int            PIPAudioProcessorWithARA_cpp_inSize = 689;
+    const int            PIPAudioProcessorWithARA_cpp_inSize = 712;
 
     extern const char*   PIPComponent_cpp_in;
     const int            PIPComponent_cpp_inSize = 2275;
 
     extern const char*   PIPConsole_cpp_in;
-    const int            PIPConsole_cpp_inSize = 299;
+    const int            PIPConsole_cpp_inSize = 309;
 
     extern const char*   RecentFilesMenuTemplate_nib;
     const int            RecentFilesMenuTemplate_nibSize = 2842;
 
     extern const char*   UnityPluginGUIScript_cs_in;
-    const int            UnityPluginGUIScript_cs_inSize = 6424;
+    const int            UnityPluginGUIScript_cs_inSize = 6605;
 
     extern const char*   gradlewrapper_jar;
     const int            gradlewrapper_jarSize = 53636;
 
     extern const char*   gradlew;
-    const int            gradlewSize = 4971;
+    const int            gradlewSize = 5131;
 
     extern const char*   gradlew_bat;
     const int            gradlew_batSize = 2404;
 
     extern const char*   LICENSE;
-    const int            LICENSESize = 11325;
+    const int            LICENSESize = 11527;
 
     extern const char*   background_logo_svg;
-    const int            background_logo_svgSize = 3249;
+    const int            background_logo_svgSize = 3261;
 
     extern const char*   export_android_svg;
-    const int            export_android_svgSize = 3586;
+    const int            export_android_svgSize = 3606;
 
     extern const char*   export_codeBlocks_svg;
-    const int            export_codeBlocks_svgSize = 1726;
+    const int            export_codeBlocks_svgSize = 1742;
 
     extern const char*   export_linux_svg;
-    const int            export_linux_svgSize = 28184;
+    const int            export_linux_svgSize = 28234;
 
     extern const char*   export_visualStudio_svg;
-    const int            export_visualStudio_svgSize = 1706;
+    const int            export_visualStudio_svgSize = 1724;
 
     extern const char*   export_xcode_svg;
-    const int            export_xcode_svgSize = 12295;
+    const int            export_xcode_svgSize = 12323;
 
     extern const char*   gpl_logo_svg;
-    const int            gpl_logo_svgSize = 27030;
+    const int            gpl_logo_svgSize = 27052;
 
     extern const char*   juce_icon_png;
     const int            juce_icon_pngSize = 105697;
 
     extern const char*   wizard_AnimatedApp_svg;
-    const int            wizard_AnimatedApp_svgSize = 5978;
+    const int            wizard_AnimatedApp_svgSize = 6152;
 
     extern const char*   wizard_AudioApp_svg;
-    const int            wizard_AudioApp_svgSize = 17791;
+    const int            wizard_AudioApp_svgSize = 18542;
 
     extern const char*   wizard_AudioPlugin_svg;
-    const int            wizard_AudioPlugin_svgSize = 21296;
+    const int            wizard_AudioPlugin_svgSize = 22149;
 
     extern const char*   wizard_ConsoleApp_svg;
-    const int            wizard_ConsoleApp_svgSize = 3249;
+    const int            wizard_ConsoleApp_svgSize = 3333;
 
     extern const char*   wizard_DLL_svg;
-    const int            wizard_DLL_svgSize = 7503;
+    const int            wizard_DLL_svgSize = 7771;
 
     extern const char*   wizard_GUI_svg;
-    const int            wizard_GUI_svgSize = 6528;
+    const int            wizard_GUI_svgSize = 6695;
 
     extern const char*   wizard_Highlight_svg;
-    const int            wizard_Highlight_svgSize = 1798;
+    const int            wizard_Highlight_svgSize = 1845;
 
     extern const char*   wizard_Openfile_svg;
-    const int            wizard_Openfile_svgSize = 1859;
+    const int            wizard_Openfile_svgSize = 1908;
 
     extern const char*   wizard_OpenGL_svg;
-    const int            wizard_OpenGL_svgSize = 4551;
+    const int            wizard_OpenGL_svgSize = 4676;
 
     extern const char*   wizard_StaticLibrary_svg;
-    const int            wizard_StaticLibrary_svgSize = 7488;
+    const int            wizard_StaticLibrary_svgSize = 7756;
 
     extern const char*   jucer_AnimatedComponentSimpleTemplate_h;
     const int            jucer_AnimatedComponentSimpleTemplate_hSize = 1898;
