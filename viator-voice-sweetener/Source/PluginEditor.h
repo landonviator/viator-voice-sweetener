@@ -81,7 +81,7 @@ private:
     
     std::vector<juce::String> _pluginDialNames =
     {
-      "Sweetess"
+      "Sweetify"
     };
     
     std::vector<juce::String> _ioDialNames =
