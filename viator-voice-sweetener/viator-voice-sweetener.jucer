@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="Ntulfg" name="viator-voice-sweetener" projectType="audioplug"
               useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
-              companyName="Viator DSP" pluginName="Viator Voice Sweetener">
+              companyName="Viator DSP" pluginName="Voice Sweetener">
   <MAINGROUP id="Y1N3I7" name="viator-voice-sweetener">
     <GROUP id="{F5D35C09-31D3-5C1B-A601-2AF40BCABE85}" name="Source">
       <GROUP id="{CD205FA8-645B-5176-901D-9BECACD2EA9F}" name="Assets">
