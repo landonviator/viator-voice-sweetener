@@ -70,9 +70,7 @@ private:
     
     viator_dsp::SVFilter<float> _hpFilter;
     viator_dsp::SVFilter<float> _lowFilter;
-    viator_dsp::SVFilter<float> _midFilter;
     viator_dsp::SVFilter<float> _highFilter;
-    viator_dsp::SVFilter<float> _lpFilter;
     juce::dsp::Gain<float> _gainModule;
     juce::dsp::Gain<float> _volumeModule;
     

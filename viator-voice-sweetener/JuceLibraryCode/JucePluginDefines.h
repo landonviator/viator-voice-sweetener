@@ -41,7 +41,7 @@
  #define JucePlugin_Enable_ARA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "Voice Sweetener"
+ #define JucePlugin_Name                   "Voice-Sweetener"
 #endif
 #ifndef  JucePlugin_Desc
  #define JucePlugin_Desc                   "viator-voice-sweetener"
@@ -137,7 +137,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "Viator DSP: Voice Sweetener"
+ #define JucePlugin_IAAName                "Viator DSP: Voice-Sweetener"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
