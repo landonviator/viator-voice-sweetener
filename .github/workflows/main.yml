@@ -79,6 +79,15 @@ jobs:
           codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetener.component
           codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetener.vst3
 
+      - name: Notarize Mac
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+        run: |
+            xcrun notarytool submit viator-voice-sweetener-au.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
+            xcrun notarytool submit viator-voice-sweetener-vst3.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
+
       - name: Upload Mac AU
         uses: actions/upload-artifact@v3
         with:
