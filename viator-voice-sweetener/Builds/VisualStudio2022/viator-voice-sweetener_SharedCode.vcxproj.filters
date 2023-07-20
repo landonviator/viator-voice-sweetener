@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="viator-voice-sweetener\Source\Assets\vu-meter">
+      <UniqueIdentifier>{0DCDBAE7-DB90-C54A-A80D-B6B29EECF4CB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="viator-voice-sweetener\Source\Assets">
       <UniqueIdentifier>{B7022A35-AE92-9B31-34C7-C3622E690F6E}</UniqueIdentifier>
     </Filter>
@@ -3118,6 +3121,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData2.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -6116,6 +6122,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\Assets\vu-meter\back_vu-meter_decore5.png">
+      <Filter>viator-voice-sweetener\Source\Assets\vu-meter</Filter>
+    </None>
+    <None Include="..\..\Source\Assets\vu-meter\scale_vu-meter.png">
+      <Filter>viator-voice-sweetener\Source\Assets\vu-meter</Filter>
+    </None>
+    <None Include="..\..\Source\Assets\vu-meter\scale_vu-meterno_name.png">
+      <Filter>viator-voice-sweetener\Source\Assets\vu-meter</Filter>
+    </None>
+    <None Include="..\..\Source\Assets\vu-meter\vu_meter.png">
+      <Filter>viator-voice-sweetener\Source\Assets\vu-meter</Filter>
+    </None>
     <None Include="..\..\Source\Assets\landon.png">
       <Filter>viator-voice-sweetener\Source\Assets</Filter>
     </None>

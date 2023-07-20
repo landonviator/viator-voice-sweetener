@@ -44,6 +44,8 @@ ViatorvoicesweetenerAudioProcessorEditor::~ViatorvoicesweetenerAudioProcessorEdi
 
 void ViatorvoicesweetenerAudioProcessorEditor::paint (juce::Graphics& g)
 {
+    _theme.setCurrentTheme(ViatorThemes::ViatorThemeData::Theme::kPrimeDark);
+    
     // background style
     setBackgroundStyle(g);
     
@@ -116,9 +118,9 @@ void ViatorvoicesweetenerAudioProcessorEditor::setWindowSizeLogic()
     
     // above width logic breaks down as the screen size approaches 864
     // so just set anything smaller than 1080 to a scale factor of 0.9
-    if (r.getWidth() < 1080.0f)
+    if (r.getWidth() <= 1440.0f)
     {
-        width = r.getWidth() * 0.85;
+        width = r.getWidth() * 0.6;
     }
     
     const float height = width * 0.667;

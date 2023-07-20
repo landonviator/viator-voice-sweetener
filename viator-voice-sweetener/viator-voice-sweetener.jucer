@@ -6,6 +6,15 @@
   <MAINGROUP id="Y1N3I7" name="viator-voice-sweetener">
     <GROUP id="{F5D35C09-31D3-5C1B-A601-2AF40BCABE85}" name="Source">
       <GROUP id="{CD205FA8-645B-5176-901D-9BECACD2EA9F}" name="Assets">
+        <GROUP id="{53D7920A-445F-D941-CC2C-C8D8A000B6C4}" name="vu-meter">
+          <FILE id="OYaN3g" name="back_vu-meter_decore5.png" compile="0" resource="1"
+                file="Source/Assets/vu-meter/back_vu-meter_decore5.png"/>
+          <FILE id="WE4MTJ" name="scale_vu-meter.png" compile="0" resource="1"
+                file="Source/Assets/vu-meter/scale_vu-meter.png"/>
+          <FILE id="umrBQn" name="scale_vu-meterno_name.png" compile="0" resource="1"
+                file="Source/Assets/vu-meter/scale_vu-meterno_name.png"/>
+          <FILE id="HcC0ut" name="vu_meter.png" compile="0" resource="1" file="Source/Assets/vu-meter/vu_meter.png"/>
+        </GROUP>
         <FILE id="QIsYFl" name="landon.png" compile="0" resource="1" file="Source/Assets/landon.png"/>
       </GROUP>
       <GROUP id="{2932E0CF-4D41-C373-5E3B-A8DEA7F23E43}" name="components">
