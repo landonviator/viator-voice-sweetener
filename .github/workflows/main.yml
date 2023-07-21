@@ -92,7 +92,6 @@ jobs:
         run: |
             xcrun notarytool submit viator-voice-sweetener-au.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
             xcrun notarytool submit viator-voice-sweetener-vst3.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
-
       - name: Upload Mac AU
         uses: actions/upload-artifact@v3
         with:
