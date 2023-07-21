@@ -54,35 +54,42 @@ jobs:
 
       - name: Build Plugin Mac AU & VST3
         run: |
-          cd viator-voice-sweetener/Builds/MacOSX
-          xcodebuild -project "viator-voice-sweetener.xcodeproj" -scheme "viator-voice-sweetener - All" -configuration Release
+          cd viator-voice-sweetender/Builds/MacOSX
+          xcodebuild -project "viator-voice-sweetender.xcodeproj" -scheme "viator-voice-sweetender - All" -configuration Release
 
       - name: Validate Mac AU
         run: |
           sudo killall -9 AudioComponentRegistrar
           sudo killall -9 coreaudiod
-          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetener.component || exit 1
+          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetender.component || exit 1
 
       - name: Validate Mac VST3
         run: |
           sudo killall -9 AudioComponentRegistrar
           sudo killall -9 coreaudiod
-          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetener.vst3 || exit 1
+          Pluginval/pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --validate-in-process --verbose --validate ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetender.vst3 || exit 1
 
       - name: Delete .a files
-        run: rm -R viator-voice-sweetener/Builds/MacOSX/build/Release/libviator-voice-sweetener.a
+        run: rm -R viator-voice-sweetender/Builds/MacOSX/build/Release/libviator-voice-sweetender.a
+
+      - name: Sign Mac Builds
+        env:
+          HASH_OF_DEVELOPER_ID_APPLICATION: ${{ secrets.HASH_OF_DEVELOPER_ID_APPLICATION }}
+        run: |
+          codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetender.component  || exit 1
+          codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetender.vst3  || exit 1
 
       - name: Zip Mac Builds
         run: |
-          zip -r viator-voice-sweetener-au.zip ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetener.component  || exit 1
-          zip -r viator-voice-sweetener-vst3.zip ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetener.vst3  || exit 1
+          zip -r viator-voice-sweetender-au.zip ~/Library/Audio/Plug-Ins/Components/viator-voice-sweetender.component  || exit 1
+          zip -r viator-voice-sweetender-vst3.zip ~/Library/Audio/Plug-Ins/VST3/viator-voice-sweetender.vst3  || exit 1
 
       - name: Sign Mac Zips
         env:
           HASH_OF_DEVELOPER_ID_APPLICATION: ${{ secrets.HASH_OF_DEVELOPER_ID_APPLICATION }}
         run: |
-            codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp viator-voice-sweetener-au.zip  || exit 1
-            codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp viator-voice-sweetener-vst3.zip  || exit 1
+            codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp viator-voice-sweetender-au.zip  || exit 1
+            codesign --deep --force --options=runtime --sign "$HASH_OF_DEVELOPER_ID_APPLICATION" --timestamp viator-voice-sweetender-vst3.zip  || exit 1
 
       - name: Notarize Mac
         env:
@@ -90,18 +97,19 @@ jobs:
           APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
           TEAM_ID: ${{ secrets.TEAM_ID }}
         run: |
-            xcrun notarytool submit viator-voice-sweetener-au.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
-            xcrun notarytool submit viator-voice-sweetener-vst3.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
+            xcrun notarytool submit viator-voice-sweetender-au.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
+            xcrun notarytool submit viator-voice-sweetender-vst3.zip --apple-id "$APPLE_ID" --password "$APP_PASSWORD" --team-id "$TEAM_ID" --wait  || exit 1
+
       - name: Upload Mac AU
         uses: actions/upload-artifact@v3
         with:
-          name: Mac-viator-voice-sweetener-AU-Artifact
+          name: Mac-viator-voice-sweetender-AU-Artifact
           path: ~/Library/Audio/Plug-Ins/Components/
 
       - name: Upload Mac VST3
         uses: actions/upload-artifact@v3
         with:
-          name: Mac-viator-voice-sweetener-VST3-Artifact
+          name: Mac-viator-voice-sweetender-VST3-Artifact
           path: ~/Library/Audio/Plug-Ins/VST3/
 
   build-windows:
@@ -127,26 +135,26 @@ jobs:
 
       - name: Build Plugin Windows VST3
         run: |
-          cd viator-voice-sweetener/Builds/VisualStudio2022
-          msbuild "viator-voice-sweetener.sln" /p:Configuration=Release /p:Platform=x64
+          cd viator-voice-sweetender/Builds/VisualStudio2022
+          msbuild "viator-voice-sweetender.sln" /p:Configuration=Release /p:Platform=x64
 
       - name: Validate Windows VST3
         run: |
-          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.vst3 || exit 1
+          Pluginval\pluginval.exe --strictness-level 5 --validate-in-process --verbose --validate viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender.vst3 || exit 1
 
       - name: Delete useless Windows files
         run: |
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\resources.res
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-v.4FC9B7FB.tlog
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.exp
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.iobj
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.pdb
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener.vst3.recipe
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener_VST3.log
-          rm -R viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetener_VST3.vcxproj.FileListAbsolute.txt
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\resources.res
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-v.4FC9B7FB.tlog
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender.exp
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender.iobj
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender.pdb
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender.vst3.recipe
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender_VST3.log
+          rm -R viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\viator-voice-sweetender_VST3.vcxproj.FileListAbsolute.txt
 
       - name: Upload Windows VST3
         uses: actions/upload-artifact@v3
         with:
-          name: Windows-viator-voice-sweetener-VST3-Artifact
-          path: viator-voice-sweetener\Builds\VisualStudio2022\x64\Release\VST3\
+          name: Windows-viator-voice-sweetender-VST3-Artifact
+          path: viator-voice-sweetender\Builds\VisualStudio2022\x64\Release\VST3\
